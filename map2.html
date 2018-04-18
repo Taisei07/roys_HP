@@ -1,0 +1,61 @@
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<head>
+<title>地図</title>
+</head>
+<body>
+
+<script src="http://maps.google.com/maps?file=api&v=1&key=ABQIAAAAgEC1l3VN5aXglL9gjbXL3hQDiCbY516ArkEj8phxg_cN4-zIaxRs4eYKt-wE8yKdtAyoxY4UE_P-LQ" type="text/javascript"></script>
+<div id="map" style="width: 300px; height: 300px"></div>
+<script type="text/javascript">
+    //<![CDATA[
+    var map = new GMap(document.getElementById('map'));
+
+    //所在地の座標設定 
+    var lon  = 139.62123155593872 ;//経度
+    var lat  = 35.476068403952105 ;//緯度
+    var myoffice = new GPoint(lon,lat);
+
+    //所在地を中心にする
+    map.centerAndZoom(myoffice , 2);// 数値部分を変えると詳細-広域に変更できます。0-17
+　　//中心を所在地と別に設定する場合
+　　//map.centerAndZoom(new GPoint(135.6591796875, 34.70549341022544) , 0);
+
+  
+    //コントロール追加
+    map.addControl(new GSmallMapControl());
+
+
+	// 所在地の地点にアイコンを設定する
+	// Create a base icon for all of our markers that specifies the
+	// shadow, icon dimensions, etc.
+	var baseIcon = new GIcon();
+	baseIcon.shadow = 'http://www.google.com/mapfiles/shadow50.png';
+	baseIcon.iconSize = new GSize(20, 34);
+	baseIcon.shadowSize = new GSize(37, 34);
+	baseIcon.iconAnchor = new GPoint(9, 34);
+	baseIcon.infoWindowAnchor = new GPoint(9, 2);
+	baseIcon.infoShadowAnchor = new GPoint(18, 25);
+	
+	var icon = new GIcon(baseIcon);
+	icon.image = 'http://www.google.com/mapfiles/markerA.png';
+
+    //所在地を表示する
+    var marker = new GMarker(myoffice,icon);
+	//var marker = new GMarker(myoffice);// デフォルトのマーカー画像を利用する場合
+    map.addOverlay(marker);
+
+	//設定した座標上に文字を表示するための吹き出しを表示
+	var msg_html = 'リサイクルブティックロイズ';// HTMLタグの利用が可能
+	GEvent.addListener(marker, 'click', function() {
+		marker.openInfoWindowHtml(msg_html);
+	});
+	// 初めからメッセージウインドウを開く場合、下のコードの頭の2本の斜線を消す。
+	//marker.openInfoWindowHtml(msg_html);
+	
+    //]]>
+</script>
+
+
+</body>
+</html>
